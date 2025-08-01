@@ -6,8 +6,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: Arial, sans-serif;
+  --font-mono: JetBrains Mono, monospace;
 
   /* BLUE ACCENT COLORS - Keep these */
   --color-primary-500: #63b3ed;
@@ -178,11 +178,12 @@ body {
 }
 
 :root {
-  --background: oklch(0.9551 0 0);
-  --foreground: oklch(0.3211 0 0);
-  --card: oklch(0.9702 0 0);
-  --card-foreground: oklch(0.3211 0 0);
-  --popover: oklch(0.9702 0 0);
+  --background: #FAF5FA;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
   --popover-foreground: oklch(0.3211 0 0);
   --primary: #4299e1;
   --primary-foreground: #ffffff;
@@ -202,15 +203,15 @@ body {
   --chart-3: oklch(0.6534 0 0);
   --chart-4: oklch(0.7316 0 0);
   --chart-5: oklch(0.8078 0 0);
-  --sidebar: oklch(0.937 0 0);
-  --sidebar-foreground: oklch(0.3211 0 0);
+  --sidebar: #F2E1F4;
+  --sidebar-foreground: #B22C77;
   --sidebar-primary: oklch(0.4891 0 0);
   --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.9067 0 0);
   --sidebar-accent-foreground: oklch(0.3211 0 0);
   --sidebar-border: oklch(0.8576 0 0);
   --sidebar-ring: #4299e1;
-  --font-sans: Space Grotesk, serif;
+  --font-sans: Arial, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: JetBrains Mono, monospace;
   --radius: 0.5rem;
@@ -229,11 +230,12 @@ body {
 }
 
 .dark {
-  --background: oklch(0.2178 0 0);
-  --foreground: oklch(0.8853 0 0);
-  --card: oklch(0.2435 0 0);
-  --card-foreground: oklch(0.8853 0 0);
-  --popover: oklch(0.2435 0 0);
+  --background: #1a1a1a;
+  --foreground: #f0f0f0;
+  --card: #2a2a2a;
+  --card-foreground: #f0f0f0;
+  --popover: #2a2a2a;
+  --popover-foreground: #f0f0f0;
   --popover-foreground: oklch(0.8853 0 0);
   --primary: #63b3ed;
   --primary-foreground: #0f1419;
@@ -253,15 +255,15 @@ body {
   --chart-3: oklch(0.5452 0 0);
   --chart-4: oklch(0.4604 0 0);
   --chart-5: oklch(0.3715 0 0);
-  --sidebar: oklch(0.2393 0 0);
-  --sidebar-foreground: oklch(0.8853 0 0);
+  --sidebar: #2a2a2a;
+  --sidebar-foreground: #B22C77;
   --sidebar-primary: oklch(0.7058 0 0);
   --sidebar-primary-foreground: oklch(0.2178 0 0);
   --sidebar-accent: oklch(0.275 0 0);
   --sidebar-accent-foreground: oklch(0.8853 0 0);
   --sidebar-border: oklch(0.329 0 0);
   --sidebar-ring: #63b3ed;
-  --font-sans: Space Grotesk, serif;
+  --font-sans: Arial, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: JetBrains Mono, monospace;
   --radius: 0.5rem;

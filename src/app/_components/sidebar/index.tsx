@@ -46,10 +46,12 @@ export async function AppSidebar({
             className="hover:bg-sidebar-accent/50 rounded-lg p-2 transition-colors group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-2"
           >
             <HStack className="items-center group-data-[collapsible=icon]:justify-center">
-              <Logo className="size-6 group-data-[collapsible=icon]:mx-auto" />
-              <h1 className="shimmer-text overflow-hidden text-xl font-bold whitespace-nowrap group-data-[collapsible=icon]:hidden">
+                <h1
+                className="overflow-hidden text-xl font-bold whitespace-nowrap group-data-[collapsible=icon]:hidden"
+                style={{ color: "#D54399" }}
+                >
                 Toolkit.dev
-              </h1>
+                </h1>
             </HStack>
           </Link>
           <div className="mt-2 group-data-[collapsible=icon]:mt-1">
@@ -75,7 +77,7 @@ export async function AppSidebar({
             >
               <SiGithub className="text-sidebar-accent-foreground !size-6 group-data-[collapsible=icon]:mx-auto" />
               <VStack className="items-start gap-0 overflow-hidden transition-all group-data-[collapsible=icon]:w-0">
-                <h3 className="shimmer-text text-sidebar-foreground truncate font-medium">
+                <h3 className="shimmer-text text-sidebar-foreground hover:text-[#B22C77] truncate font-medium">
                   Contribute
                 </h3>
                 <p className="text-sidebar-muted-foreground truncate text-xs">
