@@ -6,7 +6,6 @@ import type {
   LanguageModelCapability,
 } from "@/ai/language/types";
 import { languageModels } from "@/ai/language";
-import { getFreeModelIds } from "@/ai/language/free";
 import { LanguageModelCapability as CapabilityEnum } from "@/ai/language/types";
 
 interface UseModelSelectProps {
@@ -14,13 +13,33 @@ interface UseModelSelectProps {
   setSelectedChatModel: (model: LanguageModel) => void;
 }
 
+let cachedFreeIds: Set<string> | null = null;
+
+async function fetchFreeModelIds(): Promise<Set<string>> {
+  if (cachedFreeIds) return cachedFreeIds;
+  try {
+    const res = await fetch("/api/free-models");
+    const data = await res.json();
+    cachedFreeIds = new Set<string>(data.models ?? []);
+    console.log("[use-model-select] fetched free models", {
+      count: cachedFreeIds.size,
+    });
+  } catch (err) {
+    console.log("[use-model-select] failed to fetch free models", err);
+    cachedFreeIds = new Set();
+  }
+  return cachedFreeIds;
+}
+
 /**
- * check determines if a given modelId should receive the Free capability.
- * Current rule: modelId starts with a vowel (a, e, i, o, u), case-insensitive.
+ * check determines if a given modelId should receive the Free capability by
+ * querying the /api/free-models endpoint and verifying membership.
  */
 export const check = async (modelId: string): Promise<boolean> => {
-// Send request to the server http://localhost:3000/api/free-models to get a list of free models
-
+  const ids = await fetchFreeModelIds();
+  const isFree = ids.has(modelId);
+  console.log("[use-model-select] check", { modelId, isFree });
+  return isFree;
 };
 
 export const useModelSelect = ({
@@ -32,7 +51,6 @@ export const useModelSelect = ({
     LanguageModelCapability[]
   >([]);
   const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
-  const [freeIds, setFreeIds] = useState<Set<string> | null>(null);
 
 
   const handleModelSelect = (model: LanguageModel) => {
@@ -64,25 +82,38 @@ export const useModelSelect = ({
     return result;
   }, []);
 
-  // Mark models as "Free" when check(modelId) is true; keep hasBadge for UI check
-  const modelsWithRandomBadges = useMemo(() => {
-    return sortedModels.map((model) => {
-      const flag = check(model.modelId);
-      if (!flag) return { ...model, hasBadge: false };
-      const capsSet = new Set<LanguageModelCapability>([
-        ...(model.capabilities ?? []),
-        CapabilityEnum.Free,
-      ]);
-      return {
-        ...model,
-        hasBadge: true,
-        capabilities: Array.from(capsSet),
-      };
-    });
+  const [modelsWithBadges, setModelsWithBadges] = useState<LanguageModel[]>(
+    sortedModels,
+  );
+
+  useEffect(() => {
+    let active = true;
+    const augment = async () => {
+      const augmented = await Promise.all(
+        sortedModels.map(async (model) => {
+          const flag = await check(model.modelId);
+          if (!flag) return { ...model, hasBadge: false };
+          const capsSet = new Set<LanguageModelCapability>([
+            ...(model.capabilities ?? []),
+            CapabilityEnum.Free,
+          ]);
+          return {
+            ...model,
+            hasBadge: true,
+            capabilities: Array.from(capsSet),
+          };
+        })
+      );
+      if (active) setModelsWithBadges(augmented);
+    };
+    augment();
+    return () => {
+      active = false;
+    };
   }, [sortedModels]);
 
   const filteredModels = useMemo(() => {
-    const filtered = modelsWithRandomBadges.filter((model) => {
+    const filtered = modelsWithBadges.filter((model) => {
       const matchesCapabilities =
         selectedCapabilities.length === 0 ||
         selectedCapabilities.every((capability) =>
@@ -96,7 +127,7 @@ export const useModelSelect = ({
       return matchesCapabilities && matchesProviders;
     });
     console.log("[ModelSelect] filteredModels computed.", {
-      totalSorted: modelsWithRandomBadges.length,
+      totalSorted: modelsWithBadges.length,
       totalFiltered: filtered.length,
       selectedCapabilities,
       selectedProviders,
@@ -107,7 +138,7 @@ export const useModelSelect = ({
       })),
     });
     return filtered;
-  }, [modelsWithRandomBadges, selectedCapabilities, selectedProviders]);
+  }, [modelsWithBadges, selectedCapabilities, selectedProviders]);
 
   const toggleCapability = (capability: LanguageModelCapability) => {
     setSelectedCapabilities((prev) =>
