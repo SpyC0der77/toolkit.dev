@@ -6,6 +6,7 @@ export enum LanguageModelCapability {
   Reasoning = "reasoning",
   Pdf = "pdf",
   ToolCalling = "tool-calling",
+  Free = "free",
 }
 
 export type LanguageModel = {
@@ -17,5 +18,10 @@ export type LanguageModel = {
   bestFor?: string[];
   contextLength?: number;
   isNew?: boolean;
+  /**
+   * Free flag to show a badge in the model selector.
+   * This is evaluated client-side and not persisted.
+   */
+  hasBadge?: boolean;
   providerOptions?: ProviderMetadata;
 };

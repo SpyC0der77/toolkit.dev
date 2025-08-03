@@ -31,6 +31,9 @@ import {
   capabilityIcons,
   capabilityLabels,
   modelProviderNames,
+  featuredBadgeStyle,
+  FeaturedBadgeIcon,
+  FEATURED_BADGE_LABEL,
 } from "./utils";
 import { LanguageModelCapability } from "@/ai/language/types";
 

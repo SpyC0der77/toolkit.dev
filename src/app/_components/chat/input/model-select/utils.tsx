@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Sparkles, File, Wrench, Globe } from "lucide-react";
+import { Eye, Sparkles, File, Wrench, Globe, CircleDollarSign, Star } from "lucide-react";
 
 import { LanguageModelCapability } from "@/ai/language/types";
 
@@ -13,6 +13,7 @@ export const capabilityIcons: Record<
   [LanguageModelCapability.Reasoning]: Sparkles,
   [LanguageModelCapability.Pdf]: File,
   [LanguageModelCapability.ToolCalling]: Wrench,
+  [LanguageModelCapability.Free]: Star,
 };
 
 export const capabilityLabels: Record<LanguageModelCapability, string> = {
@@ -21,6 +22,7 @@ export const capabilityLabels: Record<LanguageModelCapability, string> = {
   [LanguageModelCapability.Reasoning]: "Reasoning",
   [LanguageModelCapability.Pdf]: "PDF",
   [LanguageModelCapability.ToolCalling]: "Tool Calling",
+  [LanguageModelCapability.Free]: "Free",
 };
 
 export const capabilityColors: Record<LanguageModelCapability, string> = {
@@ -29,7 +31,13 @@ export const capabilityColors: Record<LanguageModelCapability, string> = {
   [LanguageModelCapability.Reasoning]: "bg-orange-100 text-orange-800",
   [LanguageModelCapability.Pdf]: "bg-gray-200 text-gray-800",
   [LanguageModelCapability.ToolCalling]: "bg-yellow-100 text-yellow-800",
+  [LanguageModelCapability.Free]: "bg-purple-100 text-purple-800",
 };
+
+// Extra "badge" style to mimic capability badges for random flag
+export const featuredBadgeStyle = "bg-purple-100 text-purple-800";
+export const FeaturedBadgeIcon = Star;
+export const FEATURED_BADGE_LABEL = "Featured";
 
 export const formatContextLength = (length?: number) => {
   if (!length) return null;
