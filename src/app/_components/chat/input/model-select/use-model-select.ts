@@ -18,10 +18,9 @@ interface UseModelSelectProps {
  * check determines if a given modelId should receive the Free capability.
  * Current rule: modelId starts with a vowel (a, e, i, o, u), case-insensitive.
  */
-export const check = (modelId: string): boolean => {
-  if (!modelId) return false;
-  const first = modelId.trim().charAt(0).toLowerCase();
-  return ["a", "e", "i", "o", "u"].includes(first);
+export const check = async (modelId: string): Promise<boolean> => {
+// Send request to the server http://localhost:3000/api/free-models to get a list of free models
+
 };
 
 export const useModelSelect = ({
